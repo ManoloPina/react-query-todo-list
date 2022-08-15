@@ -1,4 +1,5 @@
 import React from "react";
+import { useAuth } from "hooks";
 import { useForm, Controller } from "react-hook-form";
 //Styles
 import * as S from "./styles";
@@ -13,12 +14,14 @@ interface IForm {
 }
 
 const Login: React.FC<Props> = ({}) => {
+  const { login } = useAuth();
   const { control, handleSubmit } = useForm<IForm>();
+  const onSubmit = (values: IForm) => login(values);
   return (
     <S.LoginContainer>
       <S.Title>Login</S.Title>
       <S.FormContainer>
-        <form>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Controller
             name="email"
             control={control}

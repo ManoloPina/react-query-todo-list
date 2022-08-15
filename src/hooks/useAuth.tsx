@@ -1,22 +1,18 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchLogin } from "api/auth";
-//Types
-import { QUERY_KEYS } from "constants";
-import { useState } from "react";
+import { QUERY_KEYS, SESSION_KEYS } from "constants";
 
 export const useAuth = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const {} = useMutation();
-  const { data: auth, refetch } = useQuery(
-    [QUERY_KEYS.LOGIN],
-    () =>
-      fetchLogin({
-        email,
-        password,
-      }),
-    { enabled: false }
-  );
+  const queryClient = useQueryClient();
 
-  return { auth, state: { email, password } };
+  const token = sessionStorage.getItem(SESSION_KEYS.TOKEN);
+
+  const { mutate: login } = useMutation(fetchLogin, {
+    onSuccess: (res) => {
+      if (!token) sessionStorage.setItem(SESSION_KEYS.TOKEN, res.token);
+      queryClient.setQueriesData([QUERY_KEYS.AUTH], res);
+    },
+  });
+
+  return { login, token };
 };

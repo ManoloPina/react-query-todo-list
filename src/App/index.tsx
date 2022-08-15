@@ -7,6 +7,8 @@ import {
   Outlet,
   Navigate,
 } from "react-router-dom";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+
 //Styles
 import * as S from "./styles";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
@@ -14,6 +16,7 @@ import { darkTheme } from "components/layout/theme";
 //Components
 import { Login } from "pages/Login";
 import { Header } from "components/layout/Header";
+import { Required } from "routes/Required";
 //Types
 import { ROUTES } from "constants";
 
@@ -32,12 +35,16 @@ const App: React.FC<Props> = () => {
               <Route path="/*" element={<Outlet />}>
                 {/* Public Paths */}
                 <Route path={ROUTES.LOGIN} element={<Login />} />
+                <Route element={<Required />}>
+                  <Route path={ROUTES.TODOS} element={<h1>Todo</h1>} />
+                </Route>
                 <Route path="*" element={<Navigate to={ROUTES.LOGIN} />} />
               </Route>
             </Routes>
           </S.AppContainer>
         </ThemeProvider>
       </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 };

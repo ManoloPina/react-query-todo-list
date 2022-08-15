@@ -8,7 +8,7 @@ export interface IUser {
   __v: number;
 }
 
-export interface IRootObject {
+export interface IAuth {
   user: IUser;
   token: string;
 }
