@@ -11,11 +11,10 @@ export const axiosPrivate = axios.create({
   headers: {
     "Content-type": "application/json",
   },
-  withCredentials: true,
 });
 
 axiosPrivate.interceptors.request.use(async (config: any) => {
-  const token = localStorage.getItem(SESSION_KEYS.TOKEN);
+  const token = sessionStorage.getItem(SESSION_KEYS.TOKEN);
 
   if (!config.headers["Authorization"]) {
     config.headers["Authorization"] = `Bearer ${token}`;

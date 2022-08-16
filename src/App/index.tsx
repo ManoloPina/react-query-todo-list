@@ -34,7 +34,7 @@ const App: React.FC<Props> = () => {
             <Routes>
               <Route path="/*" element={<Outlet />}>
                 {/* Public Paths */}
-                <Route path={ROUTES.LOGIN} element={<Login />} />
+                <Route index element={<Login />} />
                 <Route element={<Required />}>
                   <Route path={ROUTES.TODOS} element={<h1>Todo</h1>} />
                 </Route>

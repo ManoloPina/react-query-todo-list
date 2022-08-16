@@ -7,6 +7,10 @@ interface ILoginReq {
   password: string;
 }
 
+interface ILogoutRes {
+  success: boolean;
+}
+
 export const fetchLogin = async (payload: ILoginReq): Promise<IAuth> => {
   const res: AxiosResponse<IAuth, ILoginReq> = await axios.post(
     API.LOGIN,
@@ -17,5 +21,10 @@ export const fetchLogin = async (payload: ILoginReq): Promise<IAuth> => {
 
 export const fetchUser = async (): Promise<IUser> => {
   const res: AxiosResponse<IUser> = await axiosPrivate.get(API.GET_USER);
+  return res.data;
+};
+
+export const fetchLogout = async (): Promise<ILogoutRes> => {
+  const res: AxiosResponse<ILogoutRes> = await axiosPrivate.get(API.LOGOUT);
   return res.data;
 };

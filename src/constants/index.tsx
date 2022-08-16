@@ -6,16 +6,19 @@ export const QUERY_KEYS = {
 };
 
 export const ROUTES = {
-  LOGIN: "login",
+  LOGIN: "/",
   REGISTRATION: "registration",
   TODOS: "todos",
+  LOGOUT: "logout",
 };
 
 export const API = {
   LOGIN: "/user/login",
   GET_USER: "/user/me",
+  LOGOUT: "/user/logout",
 };
 
 export const SESSION_KEYS = {
   TOKEN: "TOKEN",
+  USER: "USER",
 };
