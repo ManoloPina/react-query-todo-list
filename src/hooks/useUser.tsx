@@ -9,6 +9,7 @@ export const useUser = () => {
 
   const { data: user } = useQuery([QUERY_KEYS.USER], fetchUser, {
     initialData: storedUser,
+    retry: false,
   });
 
   return { user, storedUser };

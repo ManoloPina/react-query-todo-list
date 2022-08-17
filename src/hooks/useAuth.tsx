@@ -17,6 +17,7 @@ export const useAuth = () => {
     onSuccess: () => {
       sessionStorage.removeItem(SESSION_KEYS.USER);
       sessionStorage.removeItem(SESSION_KEYS.TOKEN);
+      queryClient.setQueryData([QUERY_KEYS.USER], null);
       navigate(ROUTES.LOGIN);
     },
   });
@@ -26,16 +27,13 @@ export const useAuth = () => {
       if (!token) sessionStorage.setItem(SESSION_KEYS.TOKEN, res.token);
       if (!storedUser)
         sessionStorage.setItem(SESSION_KEYS.USER, JSON.stringify(res.user));
-
-      queryClient.setQueriesData([QUERY_KEYS.AUTH], res);
+      queryClient.setQueriesData([QUERY_KEYS.USER], res.user);
+      navigate(ROUTES.TODOS);
     },
   });
 
   //handlers
-  const handleLogout = (_e: any) => {
-    logout();
-    debugger;
-  };
+  const handleLogout = (_e: any) => logout();
 
   return { login, token, handlers: { handleLogout } };
 };

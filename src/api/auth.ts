@@ -25,6 +25,6 @@ export const fetchUser = async (): Promise<IUser> => {
 };
 
 export const fetchLogout = async (): Promise<ILogoutRes> => {
-  const res: AxiosResponse<ILogoutRes> = await axiosPrivate.get(API.LOGOUT);
+  const res: AxiosResponse<ILogoutRes> = await axiosPrivate.post(API.LOGOUT);
   return res.data;
 };

@@ -11,12 +11,14 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 //Styles
 import * as S from "./styles";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import { darkTheme } from "components/layout/theme";
 //Components
 import { Login } from "pages/Login";
 import { Header } from "components/layout/Header";
 import { Required } from "routes/Required";
+import { Spinner } from "components/layout/Spinner";
+import { Todos } from "pages/Todos";
 //Types
 import { ROUTES } from "constants";
 
@@ -36,7 +38,7 @@ const App: React.FC<Props> = () => {
                 {/* Public Paths */}
                 <Route index element={<Login />} />
                 <Route element={<Required />}>
-                  <Route path={ROUTES.TODOS} element={<h1>Todo</h1>} />
+                  <Route path={ROUTES.TODOS} element={<Todos />} />
                 </Route>
                 <Route path="*" element={<Navigate to={ROUTES.LOGIN} />} />
               </Route>
@@ -44,6 +46,7 @@ const App: React.FC<Props> = () => {
           </S.AppContainer>
         </ThemeProvider>
       </BrowserRouter>
+      <Spinner />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
