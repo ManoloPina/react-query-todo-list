@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { fetchLogin, fetchLogout } from "api/auth";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 //Types
 import { QUERY_KEYS, SESSION_KEYS, ROUTES } from "constants";
 
@@ -29,6 +30,9 @@ export const useAuth = () => {
         sessionStorage.setItem(SESSION_KEYS.USER, JSON.stringify(res.user));
       queryClient.setQueriesData([QUERY_KEYS.USER], res.user);
       navigate(ROUTES.TODOS);
+    },
+    onError: (error: any) => {
+      toast.error(error.message, { position: "top-right" });
     },
   });
 

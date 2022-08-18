@@ -1,5 +1,6 @@
 import React from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
+import { queryClient } from "utils/queryClient";
 import {
   BrowserRouter,
   Routes,
@@ -8,7 +9,6 @@ import {
   Navigate,
 } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
 //Styles
 import * as S from "./styles";
 import { ThemeProvider } from "@mui/material/styles";
@@ -19,12 +19,11 @@ import { Header } from "components/layout/Header";
 import { Required } from "routes/Required";
 import { Spinner } from "components/layout/Spinner";
 import { Todos } from "pages/Todos";
+import { Toaster } from "react-hot-toast";
 //Types
 import { ROUTES } from "constants";
 
 interface Props {}
-
-const queryClient = new QueryClient();
 
 const App: React.FC<Props> = () => {
   return (
@@ -44,6 +43,7 @@ const App: React.FC<Props> = () => {
               </Route>
             </Routes>
           </S.AppContainer>
+          <Toaster />
         </ThemeProvider>
       </BrowserRouter>
       <Spinner />

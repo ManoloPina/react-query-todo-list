@@ -11,3 +11,12 @@ export const ListWrapper = styled(Box)`
     }
   }
 `;
+
+export const ActionWrapper = styled(Box)`
+  && {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+`;

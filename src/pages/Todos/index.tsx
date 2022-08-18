@@ -23,6 +23,7 @@ const Todos: React.FC<Props> = () => {
         label="Add Todo"
         variant="outlined"
         value={description}
+        onKeyDown={handlers.handleKeyDown}
         onChange={handlers.handleDescriptionChange}
         InputProps={{
           startAdornment: (

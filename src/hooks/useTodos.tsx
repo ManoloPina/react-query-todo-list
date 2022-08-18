@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { fetchAllTodos, addTodo } from "api/todos";
+import { fetchAllTodos, addTodo, removeTdo } from "api/todos";
 //Types
 import { ITodos } from "types/Todo";
 import { QUERY_KEYS } from "constants";
@@ -15,6 +15,12 @@ export const useTodos = () => {
       queryClient.invalidateQueries([QUERY_KEYS.TODOS]);
     },
   });
+
+  const { mutate: removeTodoMutate } = useMutation(removeTdo, {
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEYS.TODOS]);
+    },
+  });
   //handlers
   const handleDescriptionChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => setDescription(e.target.value),
@@ -22,11 +28,26 @@ export const useTodos = () => {
   );
 
   const handleAddTodoClick = (_e: any) => _addTodo({ description });
+
+  const handleKeyDown = (e: any) => {
+    if (e.key === "Enter") {
+      _addTodo({ description });
+    }
+  };
+
+  const handleRemoveTodoBtnClick = (id: string) => (_e: any) =>
+    removeTodoMutate(id);
+
   //queries
   const { data: todos } = useQuery([QUERY_KEYS.TODOS], fetchAllTodos);
   return {
     todos,
     state: { description },
-    handlers: { handleAddTodoClick, handleDescriptionChange },
+    handlers: {
+      handleKeyDown,
+      handleAddTodoClick,
+      handleDescriptionChange,
+      handleRemoveTodoBtnClick,
+    },
   };
 };
