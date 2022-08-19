@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
 
-export const HeaderContainer = styled(Box)``;
+export const HeaderContainer = styled(Container)``;
 
 export const MenuListWrapper = styled(Box)`
   && {

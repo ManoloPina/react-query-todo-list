@@ -20,6 +20,7 @@ import { Required } from "routes/Required";
 import { Spinner } from "components/layout/Spinner";
 import { Todos } from "pages/Todos";
 import { Toaster } from "react-hot-toast";
+import { Registration } from "pages/Registration";
 //Types
 import { ROUTES } from "constants";
 
@@ -36,6 +37,7 @@ const App: React.FC<Props> = () => {
               <Route path="/*" element={<Outlet />}>
                 {/* Public Paths */}
                 <Route index element={<Login />} />
+                <Route path={ROUTES.REGISTRATION} element={<Registration />} />
                 <Route element={<Required />}>
                   <Route path={ROUTES.TODOS} element={<Todos />} />
                 </Route>

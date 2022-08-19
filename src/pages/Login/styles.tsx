@@ -8,8 +8,8 @@ export const LoginContainer = styled(Container).attrs((props) => ({
 }))`
   && {
     display: grid;
-    grid-template-columns: 1fr;
     grid-row-gap: 2rem;
+    grid-template-columns: 1fr;
   }
 `;
 

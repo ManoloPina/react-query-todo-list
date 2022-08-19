@@ -7,9 +7,9 @@ export const QUERY_KEYS = {
 
 export const ROUTES = {
   LOGIN: "/",
-  REGISTRATION: "registration",
   TODOS: "todos",
   LOGOUT: "logout",
+  REGISTRATION: "registration",
 };
 
 export const API = {
