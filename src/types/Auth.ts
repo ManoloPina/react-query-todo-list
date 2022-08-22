@@ -12,3 +12,8 @@ export interface IAuth {
   user: IUser;
   token: string;
 }
+export interface IRegisterReq {
+  name: string;
+  email: string;
+  password: string;
+}

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Container, Typography, Paper, Box } from "@mui/material";
+import { Container, Typography, Box } from "@mui/material";
 import { darkTheme } from "components/layout/theme";
 
 export const LoginContainer = styled(Container).attrs((props) => ({
@@ -32,3 +32,14 @@ export const Title = styled(Typography).attrs((props) => ({
   ...props,
   variant: "h2",
 }))``;
+
+export const ActionsWrapper = styled(Box)`
+  && {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    & button:not(:first-child) {
+      margin-left: 1rem;
+    }
+  }
+`;

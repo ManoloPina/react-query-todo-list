@@ -3,7 +3,7 @@ import { useTodos } from "hooks";
 //Styles
 import * as S from "./styles";
 //Components
-import { TextField, IconButton } from "@mui/material";
+import { TextField, IconButton, Checkbox } from "@mui/material";
 import { HighlightOffRounded, SaveRounded } from "@mui/icons-material";
 //Types
 import { ITodo } from "types/Todo";
@@ -14,7 +14,7 @@ interface Props {
 
 const List: React.FC<Props> = React.memo(({ todos }) => {
   const {
-    handlers: { handleRemoveTodoBtnClick },
+    handlers: { handleRemoveTodoBtnClick, handleToggleTodoCompletion },
   } = useTodos();
   return (
     <S.ListWrapper>
@@ -22,11 +22,18 @@ const List: React.FC<Props> = React.memo(({ todos }) => {
         <TextField
           fullWidth
           key={todo._id}
+          variant="outlined"
           onChange={(e: any) => {
             console.log("value:", e.target.value);
           }}
           defaultValue={todo.description}
           InputProps={{
+            startAdornment: (
+              <Checkbox
+                defaultChecked={!!todo.completed}
+                onChange={handleToggleTodoCompletion(todo)}
+              />
+            ),
             endAdornment: (
               <S.ActionWrapper>
                 <IconButton color="info">

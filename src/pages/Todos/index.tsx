@@ -18,26 +18,28 @@ const Todos: React.FC<Props> = () => {
   return (
     <S.TodoContainer>
       <S.Title>Todos</S.Title>
-      <TextField
-        fullWidth
-        label="Add Todo"
-        variant="outlined"
-        value={description}
-        onKeyDown={handlers.handleKeyDown}
-        onChange={handlers.handleDescriptionChange}
-        InputProps={{
-          startAdornment: (
-            <IconButton
-              size="large"
-              color="primary"
-              onClick={handlers.handleAddTodoClick}
-            >
-              <AddCircleRounded />
-            </IconButton>
-          ),
-        }}
-      />
-      {!!todos && todos?.data.length > 0 && <List todos={todos.data} />}
+      <S.ListContainer elevation={3}>
+        <TextField
+          fullWidth
+          label="Add Todo"
+          variant="standard"
+          value={description}
+          onKeyDown={handlers.handleKeyDown}
+          onChange={handlers.handleDescriptionChange}
+          InputProps={{
+            startAdornment: (
+              <IconButton
+                size="large"
+                color="primary"
+                onClick={handlers.handleAddTodoClick}
+              >
+                <AddCircleRounded />
+              </IconButton>
+            ),
+          }}
+        />
+        {!!todos && todos?.data.length > 0 && <List todos={todos.data} />}
+      </S.ListContainer>
     </S.TodoContainer>
   );
 };

@@ -17,6 +17,7 @@ export const API = {
   GET_USER: "/user/me",
   LOGOUT: "/user/logout",
   TODOS: "/task",
+  REGISTRATION: "user/register",
 };
 
 export const SESSION_KEYS = {

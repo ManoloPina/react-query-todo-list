@@ -12,6 +12,7 @@ const Spinner: React.FC<Props> = React.memo(() => {
     <Backdrop open={isFetching > 0 || isMutating > 0}>
       <CircularProgress
         size="4.2rem"
+        color="primary"
         hidden={isFetching === 0 || isMutating === 0}
       />
     </Backdrop>
