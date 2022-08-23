@@ -9,6 +9,7 @@ import {
   Navigate,
 } from "react-router-dom";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { SnackbarProvider } from "notistack";
 //Styles
 import * as S from "./styles";
 import { ThemeProvider } from "@mui/material/styles";
@@ -20,6 +21,7 @@ import { Required } from "routes/Required";
 import { Spinner } from "components/layout/Spinner";
 import { Todos } from "pages/Todos";
 import { Toaster } from "react-hot-toast";
+import { Registration } from "pages/Registration";
 //Types
 import { ROUTES } from "constants";
 
@@ -30,19 +32,26 @@ const App: React.FC<Props> = () => {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <ThemeProvider theme={darkTheme}>
-          <S.AppContainer>
-            <Header />
-            <Routes>
-              <Route path="/*" element={<Outlet />}>
-                {/* Public Paths */}
-                <Route index element={<Login />} />
-                <Route element={<Required />}>
-                  <Route path={ROUTES.TODOS} element={<Todos />} />
+          <SnackbarProvider maxSnack={5}>
+            <S.AppContainer>
+              <Header />
+              <Routes>
+                <Route path="/*" element={<Outlet />}>
+                  {/* Public Paths */}
+                  <Route index element={<Login />} />
+                  <Route
+                    path={ROUTES.REGISTRATION}
+                    element={<Registration />}
+                  />
+                  <Route element={<Required />}>
+                    <Route path={ROUTES.TODOS} element={<Todos />} />
+                  </Route>
+                  <Route path="*" element={<Navigate to={ROUTES.LOGIN} />} />
                 </Route>
-                <Route path="*" element={<Navigate to={ROUTES.LOGIN} />} />
-              </Route>
-            </Routes>
-          </S.AppContainer>
+              </Routes>
+            </S.AppContainer>
+          </SnackbarProvider>
+
           <Toaster />
         </ThemeProvider>
       </BrowserRouter>

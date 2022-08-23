@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Container, Typography } from "@mui/material";
+import { Container, Typography, Paper } from "@mui/material";
 
 export const TodoContainer = styled(Container)`
   && {
@@ -14,5 +14,13 @@ export const Title = styled(Typography).attrs((props) => ({
   variant: "h3",
 }))`
   && {
+  }
+`;
+
+export const ListContainer = styled(Paper)`
+  && {
+    display: grid;
+    padding: 2rem;
+    grid-row-gap: 2rem;
   }
 `;

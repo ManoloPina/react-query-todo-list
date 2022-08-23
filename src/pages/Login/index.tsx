@@ -5,6 +5,7 @@ import { useForm, Controller } from "react-hook-form";
 import * as S from "./styles";
 //Components
 import { Button, TextField } from "@mui/material";
+import { LoginRounded, PersonAddAltRounded } from "@mui/icons-material";
 
 interface Props {}
 
@@ -14,7 +15,10 @@ interface IForm {
 }
 
 const Login: React.FC<Props> = ({}) => {
-  const { login } = useAuth();
+  const {
+    login,
+    handlers: { handleRegistrationBtnClick },
+  } = useAuth();
   const { control, handleSubmit } = useForm<IForm>();
   const onSubmit = (values: IForm) => login(values);
   return (
@@ -46,9 +50,24 @@ const Login: React.FC<Props> = ({}) => {
               />
             )}
           />
-          <Button type="submit" size="large" fullWidth variant="contained">
-            Login
-          </Button>
+          <S.ActionsWrapper>
+            <Button
+              type="submit"
+              size="large"
+              variant="contained"
+              startIcon={<LoginRounded />}
+            >
+              Login
+            </Button>
+            <Button
+              size="large"
+              variant="outlined"
+              startIcon={<PersonAddAltRounded />}
+              onClick={handleRegistrationBtnClick}
+            >
+              Register
+            </Button>
+          </S.ActionsWrapper>
         </form>
       </S.FormContainer>
     </S.LoginContainer>

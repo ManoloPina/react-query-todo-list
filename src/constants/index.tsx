@@ -3,13 +3,15 @@ export const QUERY_KEYS = {
   USER: "USER",
   LOGIN: "LOGIN",
   AUTH: "AUTH",
+  TODOS_COUNT: "TODOS_COUNT",
 };
 
 export const ROUTES = {
   LOGIN: "/",
-  REGISTRATION: "registration",
   TODOS: "todos",
   LOGOUT: "logout",
+  REGISTRATION: "registration",
+  PROFILE: "my-profile",
 };
 
 export const API = {
@@ -17,6 +19,7 @@ export const API = {
   GET_USER: "/user/me",
   LOGOUT: "/user/logout",
   TODOS: "/task",
+  REGISTRATION: "user/register",
 };
 
 export const SESSION_KEYS = {

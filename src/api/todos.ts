@@ -12,8 +12,22 @@ interface IRemovedTodoRes {
   data: IUser;
 }
 
-export const fetchAllTodos = async (): Promise<ITodos> => {
-  const res: AxiosResponse<ITodos> = await axiosPrivate.get(API.TODOS);
+interface CommonRes<Data> {
+  success: boolean;
+  data: Data;
+}
+
+interface ITodoPagination {
+  limit: number;
+  skip: number;
+}
+
+export const fetchAllTodos = async (
+  pagination?: ITodoPagination
+): Promise<ITodos> => {
+  const res: AxiosResponse<ITodos> = await axiosPrivate.get(API.TODOS, {
+    params: pagination,
+  });
   return res.data;
 };
 
@@ -28,6 +42,17 @@ export const addTodo = async (payload: AddTodo): Promise<ITodo> => {
 export const removeTdo = async (id: string): Promise<IRemovedTodoRes> => {
   const res: AxiosResponse<IRemovedTodoRes, string> = await axiosPrivate.delete(
     `${API.TODOS}/${id}`
+  );
+  return res.data;
+};
+
+export const updateTodoById = async (
+  todo: ITodo
+): Promise<CommonRes<ITodo>> => {
+  const { _id, createdAt, __v, updatedAt, owner, ...rest } = todo;
+  const res: AxiosResponse<CommonRes<ITodo>, string> = await axiosPrivate.put(
+    `${API.TODOS}/${todo._id}`,
+    { ...rest }
   );
   return res.data;
 };
