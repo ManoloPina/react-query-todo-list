@@ -3,6 +3,7 @@ export const QUERY_KEYS = {
   USER: "USER",
   LOGIN: "LOGIN",
   AUTH: "AUTH",
+  TODOS_COUNT: "TODOS_COUNT",
 };
 
 export const ROUTES = {
@@ -10,6 +11,7 @@ export const ROUTES = {
   TODOS: "todos",
   LOGOUT: "logout",
   REGISTRATION: "registration",
+  PROFILE: "my-profile",
 };
 
 export const API = {

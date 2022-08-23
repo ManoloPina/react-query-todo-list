@@ -5,7 +5,7 @@ import { useSnackbar } from "notistack";
 //Types
 import { ITodo, ITodos } from "types/Todo";
 import { QUERY_KEYS } from "constants";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 
 export const useTodos = () => {
   const queryClient = useQueryClient();
@@ -15,16 +15,24 @@ export const useTodos = () => {
   } = useHttp();
   //states
   const [description, setDescription] = useState("");
+  const [limit, setLimit] = useState(5);
+  const [skip, setSkip] = useState(1);
+  const itemsEls = useRef([]);
   //mutations
   const { mutate: _addTodo } = useMutation(addTodo, {
     onSuccess: (_todo) => {
-      queryClient.invalidateQueries([QUERY_KEYS.TODOS]);
+      setDescription("");
+      queryClient.invalidateQueries([QUERY_KEYS.TODOS, QUERY_KEYS.TODOS_COUNT]);
+      enqueueSnackbar("New task added!", {
+        variant: "success",
+        anchorOrigin: { vertical: "top", horizontal: "right" },
+      });
     },
   });
 
   const { mutate: removeTodoMutate } = useMutation(removeTdo, {
     onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEYS.TODOS]);
+      queryClient.invalidateQueries([QUERY_KEYS.TODOS, QUERY_KEYS.TODOS_COUNT]);
     },
   });
 
@@ -33,7 +41,7 @@ export const useTodos = () => {
       const {
         data: { completed },
       } = res;
-      queryClient.invalidateQueries([QUERY_KEYS.TODOS]);
+      queryClient.invalidateQueries([QUERY_KEYS.TODOS, QUERY_KEYS.TODOS_COUNT]);
       enqueueSnackbar(`Task ${!!completed ? "completed!" : "uncompleted!"}`, {
         variant: "info",
         anchorOrigin: { vertical: "top", horizontal: "right" },
@@ -63,17 +71,45 @@ export const useTodos = () => {
       updateTodoMutation({ ...todo, completed: checked });
     };
 
+  const handlePageChange = useCallback(
+    (_e: React.ChangeEvent<unknown>, page: number) => setSkip(page),
+    [skip]
+  );
+
+  const handleUpdateTodoDescription =
+    (todo: ITodo) =>
+    (_e: any): void => {
+      console.log({ todo });
+      // updateTodoMutation(todo);
+    };
+
   //queries
-  const { data: todos } = useQuery([QUERY_KEYS.TODOS], fetchAllTodos);
+  const { data: todos } = useQuery([QUERY_KEYS.TODOS, limit, skip], () =>
+    fetchAllTodos({ limit, skip })
+  );
+
+  const {
+    data: { count },
+  } = useQuery([QUERY_KEYS.TODOS_COUNT], () => fetchAllTodos(), {
+    initialData: {
+      count: 0,
+      data: [],
+    } as ITodos,
+  });
+
   return {
     todos,
-    state: { description },
+    count,
+    itemsEls,
+    state: { description, limit, skip },
     handlers: {
       handleKeyDown,
+      handlePageChange,
       handleAddTodoClick,
       handleDescriptionChange,
       handleRemoveTodoBtnClick,
       handleToggleTodoCompletion,
+      handleUpdateTodoDescription,
     },
   };
 };

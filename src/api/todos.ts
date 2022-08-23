@@ -17,8 +17,17 @@ interface CommonRes<Data> {
   data: Data;
 }
 
-export const fetchAllTodos = async (): Promise<ITodos> => {
-  const res: AxiosResponse<ITodos> = await axiosPrivate.get(API.TODOS);
+interface ITodoPagination {
+  limit: number;
+  skip: number;
+}
+
+export const fetchAllTodos = async (
+  pagination?: ITodoPagination
+): Promise<ITodos> => {
+  const res: AxiosResponse<ITodos> = await axiosPrivate.get(API.TODOS, {
+    params: pagination,
+  });
   return res.data;
 };
 

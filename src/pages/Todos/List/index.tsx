@@ -3,7 +3,9 @@ import { useTodos } from "hooks";
 //Styles
 import * as S from "./styles";
 //Components
-import { TextField, IconButton, Checkbox } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import IconButton from "@mui/material/IconButton";
+import Checkbox from "@mui/material/Checkbox";
 import { HighlightOffRounded, SaveRounded } from "@mui/icons-material";
 //Types
 import { ITodo } from "types/Todo";
@@ -14,22 +16,26 @@ interface Props {
 
 const List: React.FC<Props> = React.memo(({ todos }) => {
   const {
-    handlers: { handleRemoveTodoBtnClick, handleToggleTodoCompletion },
+    itemsEls,
+    handlers: {
+      handleRemoveTodoBtnClick,
+      handleToggleTodoCompletion,
+      handleUpdateTodoDescription,
+    },
   } = useTodos();
   return (
     <S.ListWrapper>
-      {todos.map((todo) => (
+      {todos.map((todo, index: number) => (
         <TextField
           fullWidth
           key={todo._id}
           variant="outlined"
-          onChange={(e: any) => {
-            console.log("value:", e.target.value);
-          }}
           defaultValue={todo.description}
+          ref={(element) => itemsEls.current.push(element as never)}
           InputProps={{
             startAdornment: (
               <Checkbox
+                color="success"
                 defaultChecked={!!todo.completed}
                 onChange={handleToggleTodoCompletion(todo)}
               />
@@ -37,7 +43,12 @@ const List: React.FC<Props> = React.memo(({ todos }) => {
             endAdornment: (
               <S.ActionWrapper>
                 <IconButton color="info">
-                  <SaveRounded />
+                  <SaveRounded
+                    onClick={handleUpdateTodoDescription({
+                      ...todo,
+                      description: itemsEls.current[index],
+                    })}
+                  />
                 </IconButton>
                 <IconButton onClick={handleRemoveTodoBtnClick(todo._id)}>
                   <HighlightOffRounded color="error" />
