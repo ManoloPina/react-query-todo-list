@@ -5,7 +5,7 @@ import { useSnackbar } from "notistack";
 //Types
 import { ITodo, ITodos } from "types/Todo";
 import { QUERY_KEYS } from "constants";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export const useTodos = () => {
   const queryClient = useQueryClient();
@@ -42,7 +42,7 @@ export const useTodos = () => {
         data: { completed },
       } = res;
       queryClient.invalidateQueries([QUERY_KEYS.TODOS, QUERY_KEYS.TODOS_COUNT]);
-      enqueueSnackbar(`Task ${!!completed ? "completed!" : "uncompleted!"}`, {
+      enqueueSnackbar(`Task updated`, {
         variant: "info",
         anchorOrigin: { vertical: "top", horizontal: "right" },
       });
@@ -76,16 +76,33 @@ export const useTodos = () => {
     [skip]
   );
 
-  const handleUpdateTodoDescription =
+  const handleTodoDescriptionChange =
     (todo: ITodo) =>
-    (_e: any): void => {
-      console.log({ todo });
-      // updateTodoMutation(todo);
+    (e: React.ChangeEvent<HTMLInputElement>): void => {
+      const value = e.target.value;
+      const queryKey = [QUERY_KEYS.TODOS, limit, skip];
+      const _todos: ITodos | undefined = queryClient.getQueryData(queryKey);
+      const index = _todos?.data.findIndex((item) => item._id === todo._id);
+
+      if (!!_todos && index !== undefined) {
+        _todos.data[index].description = value;
+        queryClient.setQueryData(queryKey, _todos);
+      }
     };
+  const handleTodoUpdateBtnClick = (todo: ITodo) => (_e: any) => {
+    updateTodoMutation(todo);
+  };
+
+  useEffect(() => {
+    queryClient.prefetchQuery([QUERY_KEYS.TODOS, limit, skip + 1], () =>
+      fetchAllTodos({ limit, skip: skip + 1 })
+    );
+  }, [skip, limit]);
 
   //queries
-  const { data: todos } = useQuery([QUERY_KEYS.TODOS, limit, skip], () =>
-    fetchAllTodos({ limit, skip })
+  const { data: todos, isLoading: isLoadingTodos } = useQuery(
+    [QUERY_KEYS.TODOS, limit, skip],
+    () => fetchAllTodos({ limit, skip })
   );
 
   const {
@@ -101,6 +118,7 @@ export const useTodos = () => {
     todos,
     count,
     itemsEls,
+    isLoadingTodos,
     state: { description, limit, skip },
     handlers: {
       handleKeyDown,
@@ -108,8 +126,9 @@ export const useTodos = () => {
       handleAddTodoClick,
       handleDescriptionChange,
       handleRemoveTodoBtnClick,
+      handleTodoUpdateBtnClick,
       handleToggleTodoCompletion,
-      handleUpdateTodoDescription,
+      handleTodoDescriptionChange,
     },
   };
 };

@@ -20,7 +20,8 @@ const List: React.FC<Props> = React.memo(({ todos }) => {
     handlers: {
       handleRemoveTodoBtnClick,
       handleToggleTodoCompletion,
-      handleUpdateTodoDescription,
+      handleTodoDescriptionChange,
+      handleTodoUpdateBtnClick,
     },
   } = useTodos();
   return (
@@ -30,8 +31,9 @@ const List: React.FC<Props> = React.memo(({ todos }) => {
           fullWidth
           key={todo._id}
           variant="outlined"
+          onChange={handleTodoDescriptionChange(todo)}
           defaultValue={todo.description}
-          ref={(element) => itemsEls.current.push(element as never)}
+          ref={(element: any) => itemsEls.current.push(element as never)}
           InputProps={{
             startAdornment: (
               <Checkbox
@@ -43,12 +45,7 @@ const List: React.FC<Props> = React.memo(({ todos }) => {
             endAdornment: (
               <S.ActionWrapper>
                 <IconButton color="info">
-                  <SaveRounded
-                    onClick={handleUpdateTodoDescription({
-                      ...todo,
-                      description: itemsEls.current[index],
-                    })}
-                  />
+                  <SaveRounded onClick={handleTodoUpdateBtnClick(todo)} />
                 </IconButton>
                 <IconButton onClick={handleRemoveTodoBtnClick(todo._id)}>
                   <HighlightOffRounded color="error" />
