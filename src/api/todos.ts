@@ -43,6 +43,7 @@ export const removeTdo = async (id: string): Promise<IRemovedTodoRes> => {
   const res: AxiosResponse<IRemovedTodoRes, string> = await axiosPrivate.delete(
     `${API.TODOS}/${id}`
   );
+  throw new Error("I Ai se fudi!");
   return res.data;
 };
 

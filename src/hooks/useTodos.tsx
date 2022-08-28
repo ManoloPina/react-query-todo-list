@@ -22,7 +22,8 @@ export const useTodos = () => {
   const { mutate: _addTodo } = useMutation(addTodo, {
     onSuccess: (_todo) => {
       setDescription("");
-      queryClient.invalidateQueries([QUERY_KEYS.TODOS, QUERY_KEYS.TODOS_COUNT]);
+      queryClient.invalidateQueries([QUERY_KEYS.TODOS, limit, skip]);
+      queryClient.invalidateQueries([QUERY_KEYS.TODOS_COUNT]);
       enqueueSnackbar("New task added!", {
         variant: "success",
         anchorOrigin: { vertical: "top", horizontal: "right" },
@@ -32,7 +33,8 @@ export const useTodos = () => {
 
   const { mutate: removeTodoMutate } = useMutation(removeTdo, {
     onSuccess: () => {
-      queryClient.invalidateQueries([QUERY_KEYS.TODOS, QUERY_KEYS.TODOS_COUNT]);
+      queryClient.invalidateQueries([QUERY_KEYS.TODOS, limit, skip]);
+      queryClient.invalidateQueries([QUERY_KEYS.TODOS_COUNT]);
     },
   });
 

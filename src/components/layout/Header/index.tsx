@@ -6,7 +6,11 @@ import * as S from "./styles";
 import Logo from "assets/react-query-logo.svg";
 //Components
 import { AppBar, Button, Container } from "@mui/material";
-import { PowerSettingsNewRounded, FactCheckRounded } from "@mui/icons-material";
+import {
+  PowerSettingsNewRounded,
+  FactCheckRounded,
+  PersonRounded,
+} from "@mui/icons-material";
 //Types
 import { ROUTES } from "constants";
 
@@ -33,6 +37,12 @@ const navigation: INavigationItem[] = [
     path: ROUTES.LOGOUT,
     authenticated: true,
     icon: <PowerSettingsNewRounded />,
+  },
+  {
+    name: "Profile",
+    path: ROUTES.PROFILE,
+    authenticated: true,
+    icon: <PersonRounded />,
   },
 ];
 
