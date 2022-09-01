@@ -104,7 +104,8 @@ export const useTodos = () => {
   //queries
   const { data: todos, isLoading: isLoadingTodos } = useQuery(
     [QUERY_KEYS.TODOS, limit, skip],
-    () => fetchAllTodos({ limit, skip })
+    () => fetchAllTodos({ limit, skip }),
+    { refetchOnMount: false }
   );
 
   const {

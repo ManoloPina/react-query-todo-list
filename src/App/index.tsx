@@ -20,6 +20,7 @@ import { Header } from "components/layout/Header";
 import { Required } from "routes/Required";
 import { Spinner } from "components/layout/Spinner";
 import { Todos } from "pages/Todos";
+import { Profile } from "pages/Profile";
 import { Toaster } from "react-hot-toast";
 import { Registration } from "pages/Registration";
 //Types
@@ -45,6 +46,7 @@ const App: React.FC<Props> = () => {
                   />
                   <Route element={<Required />}>
                     <Route path={ROUTES.TODOS} element={<Todos />} />
+                    <Route path={ROUTES.PROFILE} element={<Profile />} />
                   </Route>
                   <Route path="*" element={<Navigate to={ROUTES.LOGIN} />} />
                 </Route>
