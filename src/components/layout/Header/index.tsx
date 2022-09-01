@@ -24,25 +24,23 @@ interface INavigationItem {
 }
 
 const navigation: INavigationItem[] = [
-  // { name: "Login", authenticated: false, path: ROUTES.LOGIN },
   {
     name: "Todos",
     path: ROUTES.TODOS,
     authenticated: true,
     icon: <FactCheckRounded />,
   },
-  // { name: "Registration", path: ROUTES.TODOS, authenticated: false },
-  {
-    name: "Logout",
-    path: ROUTES.LOGOUT,
-    authenticated: true,
-    icon: <PowerSettingsNewRounded />,
-  },
   {
     name: "Profile",
     path: ROUTES.PROFILE,
     authenticated: true,
     icon: <PersonRounded />,
+  },
+  {
+    name: "Logout",
+    path: ROUTES.LOGOUT,
+    authenticated: true,
+    icon: <PowerSettingsNewRounded />,
   },
 ];
 

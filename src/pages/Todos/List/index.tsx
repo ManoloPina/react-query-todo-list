@@ -44,7 +44,7 @@ const List: React.FC<Props> = React.memo(({ todos }) => {
             ),
             endAdornment: (
               <S.ActionWrapper>
-                <IconButton color="info">
+                <IconButton>
                   <SaveRounded onClick={handleTodoUpdateBtnClick(todo)} />
                 </IconButton>
                 <IconButton onClick={handleRemoveTodoBtnClick(todo._id)}>
